@@ -6,7 +6,7 @@ namespace SimbirsoftSummerIntensive.Infrastructure.ModifyText
 {
     public class GetUpperWords : IModifyText
     {
-        public string GetModifiedText(string text)
-            => text.ToUpper();
+        public void GetModifiedText(ref string text)
+            => text = text.ToUpper();
     }
 }

@@ -9,7 +9,7 @@ namespace SimbirsoftSummerIntensive.Infrastructure.ModifyText
     {
         private readonly string _regex = "<.*?>";
 
-        public string GetModifiedText(string text)
-        => Regex.Replace(text, _regex, String.Empty);
+        public void GetModifiedText(ref string text)
+        => text = Regex.Replace(text, _regex, String.Empty);
     }
 }

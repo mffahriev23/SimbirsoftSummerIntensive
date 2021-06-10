@@ -13,9 +13,9 @@ namespace SimbirsoftSummerIntensive.Tests
         public void ClearningHtml_Tags(string text)
         {        
             IModifyText act = new GetClearedTags();
-            string text_without_tags = act.GetModifiedText(text);
+            act.GetModifiedText(ref text);
 
-            Assert.True(text_without_tags == "Текст1Текст2.Текст3[Текст4]");
+            Assert.True(text == "Текст1Текст2.Текст3[Текст4]");
         }
 
         [Theory]
@@ -24,9 +24,9 @@ namespace SimbirsoftSummerIntensive.Tests
         {
 
             IModifyText act = new GetUpperWords();
-            string upperText = act.GetModifiedText(text);
+            act.GetModifiedText(ref text);
 
-            Assert.True(upperText == "ТЕКСT");
+            Assert.True(text == "ТЕКСT");
         }
     }
 }

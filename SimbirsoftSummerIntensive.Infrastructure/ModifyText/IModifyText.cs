@@ -6,6 +6,6 @@ namespace SimbirsoftSummerIntensive.Infrastructure.ModifyText
 {
     public interface IModifyText
     {
-        public string GetModifiedText(string text);
+        public void GetModifiedText(ref string text);
     }
 }
