@@ -1,4 +1,5 @@
-﻿using SimbirsoftSummerIntensive.Core.DBContext;
+﻿using Microsoft.EntityFrameworkCore;
+using SimbirsoftSummerIntensive.Core.DBContext;
 using SimbirsoftSummerIntensive.Core.DBModels;
 using SimbirsoftSummerIntensive.Infrastructure.DB.Interfaces;
 using System;
@@ -24,10 +25,11 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddRange(IEnumerable<StatisticField> entities)
+        public async Task<bool> AddRange(IEnumerable<StatisticField> entities)
         {
             _context.StatisticField.AddRange(entities);
-            await _context.SaveChangesAsync();
+            long result = await _context.SaveChangesAsync();
+            return result == entities.Count();
         }
 
         public Task Delete(long Id)
@@ -43,6 +45,8 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Repositories
         public IQueryable<StatisticField> GetAll()
             => _context.StatisticField;
 
+        public async Task<List<StatisticField>> GetStatisticFieldsByResourseId(long resourseId)
+            => await GetAll().Where(x => x.ResourseId == resourseId).ToListAsync();
 
         public Task Update(StatisticField entity)
         {

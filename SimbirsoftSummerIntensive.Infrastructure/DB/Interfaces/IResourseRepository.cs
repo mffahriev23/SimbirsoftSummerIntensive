@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SimbirsoftSummerIntensive.Infrastructure.DB.Interfaces
 {
-    interface IResourseRepository: IRepository<Resource>
+    public interface IResourseRepository: IRepository<Resource>
     {
-        public Task<List<Resource>> GetFreshResourseWithStatistic();
+        public Task<Resource> GetFreshResourse();
     }
 }

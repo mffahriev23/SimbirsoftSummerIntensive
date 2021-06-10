@@ -14,7 +14,9 @@ namespace SimbirsoftSummerIntensive.Infrastructure.ConfigFile
         public void CreateConfigFile(string folderPath)
         {
             _filePath = $"{folderPath}{_configFileName}";
-            File.Create(_filePath);
+            
+            if(!Directory.Exists(_filePath))
+                File.Create(_filePath);
         }
 
         public async Task<string> GetTextFromConfigFile()

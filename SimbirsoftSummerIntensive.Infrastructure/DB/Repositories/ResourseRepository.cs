@@ -25,10 +25,11 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddRange(IEnumerable<Resource> entities)
+        public async Task<bool> AddRange(IEnumerable<Resource> entities)
         {
             _context.Resource.AddRange(entities);
-            await _context.SaveChangesAsync();
+            int result = await _context.SaveChangesAsync();
+            return result == entities.Count();
         }
 
         public Task Delete(long Id)
@@ -42,11 +43,8 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Repositories
         public IQueryable<Resource> GetAll()
             => _context.Resource;
 
-        public async Task<List<Resource>> GetFreshResourseWithStatistic()
-            => await GetAll()
-                     .Include(x => x.StatisticFields)
-                     .Where(x => x.Created == GetAll().Max(y => y.Created))
-                     .ToListAsync();
+        public async Task<Resource> GetFreshResourse()
+            => await GetAll().SingleOrDefaultAsync(x => x.Created == GetAll().Max(y => y.Created));
 
         public async Task Update(Resource entity)
         {

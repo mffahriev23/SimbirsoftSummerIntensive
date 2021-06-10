@@ -13,6 +13,6 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Interfaces
         public Task Delete(long Id);
         public Task Add(T entity);
         public Task Update(T entity);
-        public Task AddRange(IEnumerable<T> entities);
+        public Task<bool> AddRange(IEnumerable<T> entities);
     }
 }
