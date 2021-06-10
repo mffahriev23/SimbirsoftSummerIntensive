@@ -21,10 +21,4 @@
   <ItemGroup>
     <ProjectReference Include="..\SimbirsoftSummerIntensive.Infrastructure\SimbirsoftSummerIntensive.Infrastructure.csproj" />
   </ItemGroup>
-  
-    <ItemGroup>
-        <None Include="appconfig.json" CopyToOutputDirectory="Always" />
-    </ItemGroup>
- 
-
 </Project>

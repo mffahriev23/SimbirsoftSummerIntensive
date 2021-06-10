@@ -51,7 +51,7 @@ namespace SimbirsoftSummerIntensive.CLI.BusinessLogic
             await _resourseService.Add(new Resource { SourcePath = _sourcePath });
             _resourse = await _resourseService.GetFreshResourse();
 
-            _dataFilePath = $"{_dataFolderPath}/{DateTime.Now.ToString("yyyyMMddhhmmssff")}";
+            _dataFilePath = $"{_dataFolderPath}/{DateTime.Now.ToString("yyyyMMddhhmmssff")}.html";
             await downloadResource.DownloadResource(_sourcePath, _dataFilePath);
 
             _resourse.FilePath = _dataFilePath;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimbirsoftSummerIntensive.Infrastructure.ConfigFile
 {
-    class ManipulateConfigJson : IManipulateConfig
+    public class ManipulateConfigJson : IManipulateConfig
     {
         private IManipulateConfigFile _configFileManipulate;
 

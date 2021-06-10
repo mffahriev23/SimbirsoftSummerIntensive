@@ -44,7 +44,7 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Repositories
             => _context.Resource;
 
         public async Task<Resource> GetFreshResourse()
-            => await GetAll().SingleOrDefaultAsync(x => x.Created == GetAll().Max(y => y.Created));
+            => await GetAll().SingleOrDefaultAsync(x => x.Id == GetAll().Max(y => y.Id));
 
         public async Task Update(Resource entity)
         {
