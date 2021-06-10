@@ -36,10 +36,8 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Resource> Get(long Id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<Resource> Get(long Id)
+            => await _context.Resource.SingleOrDefaultAsync(x => x.Id == Id);
 
         public IQueryable<Resource> GetAll()
             => _context.Resource;
@@ -50,9 +48,10 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DB.Repositories
                      .Where(x => x.Created == GetAll().Max(y => y.Created))
                      .ToListAsync();
 
-        public Task Update(Resource entity)
+        public async Task Update(Resource entity)
         {
-            throw new NotImplementedException();
+            _context.Resource.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

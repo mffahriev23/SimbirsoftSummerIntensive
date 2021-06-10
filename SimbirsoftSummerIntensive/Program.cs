@@ -11,7 +11,6 @@ namespace SimbirsoftSummerIntensive.CLI
 {
     public class Program
     {
-        private static IConfiguration _configuration;
         private static ILogger _logger;
 
         public static async Task Main(string[] args)
@@ -41,13 +40,6 @@ namespace SimbirsoftSummerIntensive.CLI
 
                 Console.ReadKey();
         }
-
-        private static IConfiguration InitConfiguration(string[] args)
-            => new ConfigurationBuilder()
-                    .AddJsonFile($@"{Environment.CurrentDirectory}\appconfig.json", optional: true, reloadOnChange: true)
-                    .AddEnvironmentVariables()
-                    .AddCommandLine(args)
-                    .Build();
 
         private static ILogger InitLogger(string logDirectory)
             => new Serilog.LoggerConfiguration()
