@@ -1,0 +1,5 @@
+{
+  "pathResource": "C:\\a\\b\\c\\",
+  "logPath": "C:\\Logs",
+  "ConnectionString": "Server=DESKTOP-73G6TMG\\SQLEXPRESS;Database=SportsStore;Trusted_Connection=True;MultipleActiveResultSets=true"
+}
