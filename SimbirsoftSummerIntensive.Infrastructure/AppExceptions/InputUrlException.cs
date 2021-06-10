@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SimbirsoftSummerIntensive.CLI.AppExceptions
+namespace SimbirsoftSummerIntensive.Infrastructure.AppExceptions
 {
     public class InputUrlException : Exception
     {

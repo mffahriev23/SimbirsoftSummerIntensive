@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SimbirsoftSummerIntensive.CLI.ConsoleReadData;
+using SimbirsoftSummerIntensive.Infrastructure.ConsoleReadData;
 using SimbirsoftSummerIntensive.CLI.MenuCLI;
 using System;
 using System.Collections.Generic;
@@ -15,14 +15,14 @@ namespace SimbirsoftSummerIntensive.CLI
         {
             _serviceProvider = new ServiceCollection()
                                     .AddSingleton<IMenu, MenuDowloadFile>()
-                                    .AddSingleton<ICheckRightInputData, CheckRightUrl>()
+                                    .AddSingleton<CheckRightInputData, CheckRightUrl>()
                                     .BuildServiceProvider();
         }
 
         public static IMenu GetMenu()
             => _serviceProvider.GetService<IMenu>();
 
-        public static ICheckRightInputData GetCheckSourcePath()
-            => _serviceProvider.GetService<ICheckRightInputData>();
+        public static CheckRightInputData GetCheckSourcePath()
+            => _serviceProvider.GetService<CheckRightInputData>();
     }
 }

@@ -1,5 +1,5 @@
-﻿using SimbirsoftSummerIntensive.CLI.AppExceptions;
-using SimbirsoftSummerIntensive.CLI.ConsoleReadData;
+﻿using SimbirsoftSummerIntensive.Infrastructure.ConsoleReadData;
+using SimbirsoftSummerIntensive.Infrastructure.AppExceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +9,9 @@ namespace SimbirsoftSummerIntensive.CLI.MenuCLI
     public class MenuDowloadFile : IMenu
     {
         private string _inputedData;
-        private ICheckRightInputData _checkService;
+        private CheckRightInputData _checkService;
 
-        public MenuDowloadFile(ICheckRightInputData checkService)
+        public MenuDowloadFile(CheckRightInputData checkService)
             => _checkService = checkService;
 
         public void Show()
@@ -28,7 +28,7 @@ namespace SimbirsoftSummerIntensive.CLI.MenuCLI
                 throw new InputUrlException($"неправильно введён url {_inputedData}");
         }
 
-        public bool CheckRightInputedData(ICheckRightInputData service)
-            => service.CheckRightInputData(_inputedData);
+        public bool CheckRightInputedData(CheckRightInputData service)
+            => service.CheckRight(_inputedData);
     }
 }

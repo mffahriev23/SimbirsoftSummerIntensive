@@ -1,4 +1,4 @@
-﻿using SimbirsoftSummerIntensive.CLI.ConsoleReadData;
+﻿using SimbirsoftSummerIntensive.Infrastructure.ConsoleReadData;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +9,6 @@ namespace SimbirsoftSummerIntensive.CLI.MenuCLI
     {
         public void Show();
         public T GetEnteredData<T>();
-        public bool CheckRightInputedData(ICheckRightInputData service);
+        public bool CheckRightInputedData(CheckRightInputData service);
     }
 }
