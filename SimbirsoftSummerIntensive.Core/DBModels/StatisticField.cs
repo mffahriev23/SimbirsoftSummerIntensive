@@ -13,6 +13,7 @@ namespace SimbirsoftSummerIntensive.Core.DBModels
         public int Count { get; set; }
         public long ResourseId { get; set; }
 
+        [ForeignKey("ResourseId")]
         public Resource Resource { get; set; }
     }
 }

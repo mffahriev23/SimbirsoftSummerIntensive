@@ -18,7 +18,6 @@ namespace SimbirsoftSummerIntensive.Core.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=DESKTOP-73G6TMG\\SQLEXPRESS;Database=Simbirsoft;Trusted_Connection=True;MultipleActiveResultSets=true");
             optionsBuilder.UseSqlServer(_connectionString);
         }
 
@@ -26,7 +25,7 @@ namespace SimbirsoftSummerIntensive.Core.DBContext
         {
             modelBuilder.Entity<Resource>()
                         .Property(x => x.Created)
-                        .HasDefaultValue(DateTimeOffset.UtcNow);
+                        .HasDefaultValueSql("getdate()");
         }
 
         public DbSet<Resource> Resource { get; set; }

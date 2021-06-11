@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace SimbirsoftSummerIntensive.Infrastructure.ModifyText
 {
-    public class GetClearedTags : IModifyText
+    public class GetClearedJS: IModifyText
     {
-        private readonly string _regex = @"<[^>]*>";
+        private readonly string _regex = @"<script(.*)>[\w\W]*?<\/script>";
 
         public void GetModifiedText(ref string text)
         => text = Regex.Replace(text, _regex, String.Empty);

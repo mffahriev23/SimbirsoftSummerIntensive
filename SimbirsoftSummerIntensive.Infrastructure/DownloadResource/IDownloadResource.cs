@@ -7,6 +7,7 @@ namespace SimbirsoftSummerIntensive.Infrastructure.DownloadResource
 {
     public interface IDownloadResource
     {
-        public Task DownloadResource(string source, string target);
+        public Task DownloadResource(string source);
+        Task<string> GetDataFromResourse();
     }
 }

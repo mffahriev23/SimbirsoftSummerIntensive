@@ -16,7 +16,7 @@ namespace SimbirsoftSummerIntensive.CLI.MenuCLI
 
         public void Show()
         {
-            Console.Write("Введите строку подключения к базе: ");
+            Console.Write("Введите строку подключения к базе (MSSQL): ");
             _inputedData = Console.ReadLine();
         }
 

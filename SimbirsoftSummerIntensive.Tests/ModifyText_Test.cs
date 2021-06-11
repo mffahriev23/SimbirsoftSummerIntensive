@@ -19,6 +19,26 @@ namespace SimbirsoftSummerIntensive.Tests
         }
 
         [Theory]
+        [InlineData("<div>Текст1Текст2.Текст3[Текст4]</div><script src=\"text\\javascript\">console.log('log')</script>")]
+        public void ClearningJs(string text)
+        {
+            IModifyText act = new GetClearedJS();
+            act.GetModifiedText(ref text);
+
+            Assert.True(text == "<div>Текст1Текст2.Текст3[Текст4]</div>");
+        }
+
+        [Theory]
+        [InlineData("<div>Текст1Текст2.Текст3[Текст4]</div><style>.a{backgraoudcolog:red;}</style>")]
+        public void ClearningCSS(string text)
+        {
+            IModifyText act = new GetClearedCss();
+            act.GetModifiedText(ref text);
+
+            Assert.True(text == "<div>Текст1Текст2.Текст3[Текст4]</div>");
+        }
+
+        [Theory]
         [InlineData("ТеКсT")]
         public void GetUpperWords(string text)
         {

@@ -5,41 +5,36 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Serilog;
-using SimbirsoftSummerIntensive.Core.DBContext;
 using SimbirsoftSummerIntensive.Core.DBModels;
 using SimbirsoftSummerIntensive.Infrastructure.DataForStatistic;
 using SimbirsoftSummerIntensive.Infrastructure.DB.Interfaces;
-using SimbirsoftSummerIntensive.Infrastructure.DB.Repositories;
 using SimbirsoftSummerIntensive.Infrastructure.DownloadResource;
 using SimbirsoftSummerIntensive.Infrastructure.ModifyText;
-using SimbirsoftSummerIntensive.Infrastructure.ReadDataFromFile;
 using SimbirsoftSummerIntensive.Infrastructure.Statistic;
 
 namespace SimbirsoftSummerIntensive.CLI.BusinessLogic
 {
     public class StatisticWordsIntoHtml : IBusinessLogic<IDictionary<string, int>>
     {
-        private readonly string _sourcePath, _dataFolderPath;
+        private readonly string _sourcePath;
         private readonly ILogger _logger;
         private readonly IResourseRepository _resourseService;
         private readonly IStatisticFieldRepository _statisticFieldService;
 
-        private readonly IDownloadResource downloadResource = new DownloadFileByUrl();
-        private readonly IGetTextFromFile getterText = new ReadTextFromTextFile();
+        private IDownloadResource resourceService;
         private readonly IDataForStatistic getterDataForStatistic = new StatisticWordsIntoText();
         private readonly IGetStatisticText getterStatistic = new StatisticText();
 
         private string _dataFilePath;
         private string _text;
         private Resource _resourse;
-        private List<StatisticField> _statisticFields;
         private IEnumerable<string> _wordsInText;
 
-        public StatisticWordsIntoHtml(string sourcePath, string dataFolderPath, ILogger logger, IResourseRepository resourseService,
+        public StatisticWordsIntoHtml(string sourcePath, string dataFilePath, ILogger logger, IResourseRepository resourseService,
                                       IStatisticFieldRepository statisticFieldService)
         {
             _sourcePath = sourcePath;
-            _dataFolderPath = dataFolderPath;
+            _dataFilePath = dataFilePath;
             _logger = logger;
             _resourseService = resourseService;
             _statisticFieldService = statisticFieldService;
@@ -50,26 +45,33 @@ namespace SimbirsoftSummerIntensive.CLI.BusinessLogic
         {
             await _resourseService.Add(new Resource { SourcePath = _sourcePath });
             _resourse = await _resourseService.GetFreshResourse();
+            _logger.Information("Ссылка на ресурс успешно сохранена в базе");
 
-            _dataFilePath = $"{_dataFolderPath}/{DateTime.Now.ToString("yyyyMMddhhmmssff")}.html";
-            await downloadResource.DownloadResource(_sourcePath, _dataFilePath);
+            resourceService = new DownloadFileByUrl(_dataFilePath);
+            await resourceService.DownloadResource(_sourcePath);
+            _logger.Information("Ресурс получен");
 
             _resourse.FilePath = _dataFilePath;
             await _resourseService.Update(_resourse);
+            _logger.Information("Путь к ресурсу сохранён в базу");
 
-            getterText.SetFilePath(_dataFolderPath);
-            _text = await getterText.GetTextFromFile();
+            _text = await resourceService.GetDataFromResourse();
+            _logger.Information("Текст из ресурса считан");
 
-            ModifyText(ref _text, new GetClearedTags(), new GetUpperWords());
+            ModifyText(ref _text, new GetClearedCss(), new GetClearedJS(), new GetClearedTags(), new GetUpperWords());
             _wordsInText = getterDataForStatistic.GetDataForStatistic(_text);
-            IDictionary<string, int> statistic = getterStatistic.GetStatisticText(_wordsInText);
+            _logger.Information("Текст успешно обработан");
 
-            var resultStatistic = await _statisticFieldService.AddRange(statistic.Select(x => new StatisticField 
+            IDictionary<string, int> statistic = getterStatistic.GetStatisticText(_wordsInText);
+            _logger.Information("Статистика получена");
+
+           bool resultStatistic = await _statisticFieldService.AddRange(statistic.Select(x => new StatisticField 
             { 
                 StatisticElement = x.Key, 
                 Count = x.Value, 
                 ResourseId = _resourse.Id 
             }));
+            _logger.Information("Стистика  сохранена в базу");
 
             if (resultStatistic)
                 return statistic;
